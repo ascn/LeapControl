@@ -120,7 +120,7 @@ public class ControlListener extends Listener {
                     switch (dir) {
                         case "vertical":
                             float speed = swipe.speed();
-                            float scrollAmount = speed / 100;
+                            float scrollAmount = speed / 75;
                             if (vecDir.getY() < 0) {
                                 swipe(robot, scrollAmount);
                             }
