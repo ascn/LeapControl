@@ -3,11 +3,6 @@ LeapControl
 
 LeapControl is an addition to the multitude of operating system control programs for the Leap Motion 3D Tracking device. It currently only supports OSX and Linux, and was built for use with the [LeapMotionRecorder](https://github.com/alexanderchan97/LeapMotionRecorder). It is written in Java.
 
-Table of Contents
------------------
-*[Installation](#installation)
-*[Usage](#usage)
-
 # <a name="installation"></a>Installation
 Place all the file in the same directory. Download the [LeapSDK](https://developer.leapmotion.com) and copy `LeapJava.jar` into the same directory. For OSX, also copy `libLeap.dylib` and `libLeapJava.dylib` into the directory. For Linux, copy `libLeap.so` and `libLeapJava.so` into the directory. Now, run `leapControl.sh`.
 
