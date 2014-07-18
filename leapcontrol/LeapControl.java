@@ -4,7 +4,7 @@ import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
 import java.awt.AWTException;
-import com.leapmotion.leap.*;
+import com.leapmotion.leap.Controller;
 import java.io.IOException;
 
 /**

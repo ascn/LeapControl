@@ -107,6 +107,27 @@ public class ControlListener extends Listener {
                         }
                     }
                     break;
+                case TYPE_CIRCLE:
+                    CircleGesture circle = new CircleGesture(gesture);
+                    HandList circHands = circle.hands();
+                    for (int j = 0; j < circHands.count(); j++) {
+                        Hand gestHand = circHands.get(j);
+                        if (gestHand.isLeft() == true) {
+                            String clockwiseness;
+                            if ((circle.pointable().direction().angleTo(circle.normal())) <= Math.PI/2) {
+                                clockwiseness = "clockwise";
+                            }
+                            else {
+                                clockwiseness = "counterclockwise";
+                            }
+                            switch (clockwiseness) {
+                                case "clockwise":
+                                    scroll(robot, 3.0f);
+                                case "counterclockwise":
+                                    scroll(robot, -1.0f);
+                            }
+                        }
+                    }
                 case TYPE_SWIPE:
                     SwipeGesture swipe = new SwipeGesture(gesture);
                     Vector vecDir = swipe.direction();
@@ -121,11 +142,12 @@ public class ControlListener extends Listener {
                         case "vertical":
                             float speed = swipe.speed();
                             float scrollAmount = speed / 75;
+                            System.out.println(scrollAmount);
                             if (vecDir.getY() < 0) {
-                                swipe(robot, scrollAmount);
+                                scroll(robot, scrollAmount);
                             }
                             else {
-                                swipe(robot, -scrollAmount);
+                                scroll(robot, -scrollAmount);
                             }
                         case "horizontal":
                             /* robot.keyPress(KeyEvent.VK_CONTROL);
@@ -155,10 +177,10 @@ public class ControlListener extends Listener {
         robot.delay(50);
     }
     
-    private void swipe(Robot robot, float amt) {
-        int scroll = (int) Math.round(amt);
-        robot.mouseWheel(scroll);
-        robot.delay(50);
+    private void scroll(Robot robot, float amt) {
+        int scrollAmt = (int) Math.round(amt);
+        robot.mouseWheel(scrollAmt);
+        robot.delay(100);
     }
     
 }
