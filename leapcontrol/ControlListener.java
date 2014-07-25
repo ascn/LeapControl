@@ -90,6 +90,7 @@ public class ControlListener extends Listener {
         controller.config().setFloat("Gesture.KeyTap.MinDownVelocity", 30.0f);
         controller.config().setFloat("Gesture.KeyTap.MinDistance", 1.0f);
         controller.config().setFloat("Gesture.Swipe.MinVelocity", 400.0f);
+        controller.config().setFloat("Gesture.Circle.MinRadius", 20.0f);
         controller.config().save();
         
         GestureList gestures = currentFrame.gestures();
@@ -128,6 +129,7 @@ public class ControlListener extends Listener {
                             }
                         }
                     }
+                    break;
                 case TYPE_SWIPE:
                     SwipeGesture swipe = new SwipeGesture(gesture);
                     Vector vecDir = swipe.direction();
@@ -142,7 +144,6 @@ public class ControlListener extends Listener {
                         case "vertical":
                             float speed = swipe.speed();
                             float scrollAmount = speed / 75;
-                            System.out.println(scrollAmount);
                             if (vecDir.getY() < 0) {
                                 scroll(robot, scrollAmount);
                             }
