@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Change to the path of the native libraries
-export LD_LIBRARY_PATH=/home/achan/Desktop/.developer/Leap/LeapControl/
+export LD_LIBRARY_PATH=$PWD
 
 javac -classpath LeapJava.jar ./leapcontrol/*.java
 

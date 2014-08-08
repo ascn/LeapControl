@@ -7,15 +7,8 @@ import java.awt.AWTException;
 import com.leapmotion.leap.Controller;
 import java.io.IOException;
 
-/**
- *
- * @author achan
- */
 public class LeapControl {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         
         ControlListener listener = new ControlListener();

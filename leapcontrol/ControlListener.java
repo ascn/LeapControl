@@ -10,10 +10,6 @@ import java.util.logging.Logger;
 import java.awt.Toolkit;
 import java.awt.Dimension;
 
-/**
- *
- * @author achan
- */
 public class ControlListener extends Listener {
     
     @Override
@@ -61,7 +57,7 @@ public class ControlListener extends Listener {
         long currentFrameID = currentFrame.id();
         HandList allHands = currentFrame.hands();
         Hand hand;
-        FingerList allFingers;
+        FingerList allFingers, extendedFingers;
         Finger finger;
         Vector coordinates;
         int x, y, z;
@@ -74,23 +70,25 @@ public class ControlListener extends Listener {
             hand = allHands.get(i);
             if (hand.isRight() == true) {
                 allFingers = hand.fingers();
-                for (int j = 0; j < allFingers.count(); j++) {
-                    finger = allFingers.get(j);
-                    if (finger.isExtended() == true && finger.type() == Finger.Type.TYPE_INDEX) {
-                        coordinates = finger.tipPosition();
-                        x = (int) ((coordinates.getX() + 150) * (width / 500));
-                        y = (int) ((coordinates.getY() - 430) * -(height / 300));
-                        z = (int) coordinates.getZ();
-                        robot.mouseMove(x, y);
-                    }
-                }                
+                extendedFingers = hand.fingers().extended();
+                if (extendedFingers.count() == 1 && extendedFingers.get(0).type() == Finger.Type.TYPE_INDEX) {
+                    finger = extendedFingers.get(0);
+                    coordinates = finger.tipPosition();
+                    x = (int) ((coordinates.getX() + 150) * (width / 250));
+                    y = (int) ((coordinates.getY() - 300) * -(height / 150));
+                    z = (int) coordinates.getZ();
+                    robot.mouseMove(x, y);
+
+                }
             }
         }
         
         controller.config().setFloat("Gesture.KeyTap.MinDownVelocity", 30.0f);
         controller.config().setFloat("Gesture.KeyTap.MinDistance", 1.0f);
-        controller.config().setFloat("Gesture.Swipe.MinVelocity", 400.0f);
-        controller.config().setFloat("Gesture.Circle.MinRadius", 20.0f);
+        controller.config().setFloat("Gesture.Swipe.MinVelocity", 450.0f);
+        controller.config().setFloat("Gesture.Circle.MinRadius", 25.0f);
+        controller.config().setFloat("Gesture.ScreenTap.MinForwardVelocity", 40.0f);
+        controller.config().setFloat("Gesture.ScreenTap.MinDistance", 5.0f);
         controller.config().save();
         
         GestureList gestures = currentFrame.gestures();
@@ -157,6 +155,16 @@ public class ControlListener extends Listener {
                             robot.keyRelease(KeyEvent.VK_RIGHT);
                             robot.keyRelease(KeyEvent.VK_ALT);
                             robot.keyRelease(KeyEvent.VK_CONTROL); */
+                    }
+                    break;
+                case TYPE_SCREEN_TAP:
+                    ScreenTapGesture screenTap = new ScreenTapGesture(gesture);
+                    HandList screenHands = screenTap.hands();
+                    for (int j = 0; i < screenHands.count(); i++) {
+                        Hand gestHand = screenHands.get(i);
+                        if (gestHand.isRight() == true) {
+                            leftClick(robot);
+                        }
                     }
                     break;
             }
